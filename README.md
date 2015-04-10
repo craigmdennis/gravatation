@@ -39,8 +39,8 @@ $(document).ready( function(){
 </script>
 ```
 
-Note that this will not actually do anything by itself.
-Currently the plugin returns the image object and src within callbacks for you to do with as you will.
+**Note that this will not actually do anything by itself.**
+Currently the plugin returns the image object and src within callbacks for you to do with as you wish.
 
 ## Options
 
