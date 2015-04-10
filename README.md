@@ -88,6 +88,15 @@ $('[data-gravitation]').gravitation({
 });
 ```
 
+#### Insert the image as a background image
+```js
+$('[data-gravitation]').gravitation({
+  onGravatarSuccess: function( $img, src, $input ){
+    $('#gravatar').attr( 'background-image', src );
+  }
+});
+```
+
 ## Release History
 Please consult the official [changelog][changelog]
 
