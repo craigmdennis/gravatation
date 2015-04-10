@@ -8,13 +8,13 @@ A jQuery plugin to validate email addresses and retrieve associated Gravatar ima
 
 ## Getting Started
 
-### Bower
+#### Bower
 Install with [Bower][bower]
 `bower install jquery.gravitation`
 
 [bower]: http://bower.io/
 
-### Download
+#### Download
 Download the bundled [production version][min] or the unbundled [development version][max].
 
 [min]: https://raw.github.com/craigmdennis/animateCSS/master/dist/jquery.gravitation.min.js
