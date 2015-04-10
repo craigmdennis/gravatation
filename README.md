@@ -100,4 +100,4 @@ $('[data-gravitation]').gravitation({
 ## Release History
 Please consult the official [changelog][changelog]
 
-[changelog]: https://github.com/craigmdennis/animateCSS/blob/master/CHANGELOG.md
+[changelog]: https://github.com/craigmdennis/gravitation/blob/master/CHANGELOG.md
