@@ -20,7 +20,7 @@ Install with [Bower][bower] using `bower install jquery.gravatation --save-dev`
 The script is available with the dependcied bundled in (md5.js and debounce.js) or you can download the standalone script without dependencies if you already have them as part of your project. Neither contain jQuery.
 
 - Bundled [minified version][bundlemin] or [development version][bundlemax] (recommended)
-- Standalone [minified version][max] or [development version][max]
+- Standalone [minified version][min] or [development version][max]
 
 [min]: https://raw.githubusercontent.com/craigmdennis/gravatation/master/dist/jquery.gravatation.min.js
 [max]: https://raw.githubusercontent.com/craigmdennis/gravatation/master/dist/jquery.gravatation.js
