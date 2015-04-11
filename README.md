@@ -22,10 +22,10 @@ The script is available with the dependcied bundled in (md5.js and debounce.js) 
 - Bundled [minified version][bundlemin] or [development version][bundlemax] (recommended)
 - Standalone [minified version][max] or [development version][max]
 
-[min]: https://raw.github.com/craigmdennis/gravatation/blob/master/dist/jquery.gravatation.min.js
-[max]: https://github.com/craigmdennis/gravatation/blob/master/dist/jquery.gravatation.js
-[bundlemin]: https://raw.github.com/craigmdennis/gravatation/blob/master/dist/jquery.gravatation.bundled.min.js
-[bundlemax]: https://raw.github.com/craigmdennis/gravatation/blob/master/dist/jquery.gravatation.bundled.js
+[min]: https://raw.githubusercontent.com/craigmdennis/gravatation/master/dist/jquery.gravatation.min.js
+[max]: https://raw.githubusercontent.com/craigmdennis/gravatation/master/dist/jquery.gravatation.js
+[bundlemin]: https://raw.githubusercontent.com/craigmdennis/gravatation/master/dist/jquery.gravatation.bundled.min.js
+[bundlemax]: https://raw.githubusercontent.com/craigmdennis/gravatation/master/dist/jquery.gravatation.bundled.js
 
 ## Useage
 
