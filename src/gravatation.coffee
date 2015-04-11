@@ -4,17 +4,19 @@
   class Gravatation
 
     defaults:
-      size: 40
-      secure: false
-      onInit: null
-      onInvalid: null
-      onValid: null
-      onGravatarSuccess: null
-      onGravatarFail: null
-      onEmpty: null
-      timeout: 500
-      ext: true
-      d: ''
+      size: 40 # int
+      secure: false # bool
+      onInit: -> # function
+      onInput: -> # function
+      onInvalid: -> # function
+      onValid: -> # function
+      onGravatarSuccess: -> # function
+      onGravatarFail: -> # function
+      onEmpty: -> # function
+      timeout: 500 # int
+      validate: 'input' # Any jQuery event or false
+      ext: true # bool
+      d: '' # https://en.gravatar.com/site/implement/images/
 
 
     # Construct / init the plugin
@@ -27,51 +29,66 @@
       # Callback
       @options.onValid( @$el )
 
-      console.log 'gravatation Loaded'
+      console.log 'Gravatation Loaded'
 
 
     # Bind event handlers
     bind: ->
+
       # Validate the input in case of browser auto-fill
-      @validate()
-      @$el.on 'input', $.debounce( @options.timeout, @validate )
+      if @options.validate
+        @getInputValidity()
+
+      # Check the validity of the field on blur
+      if @options.validate == 'blur'
+        @$el.on @options.validate, @getInputValidity
+
+      # Otherwise check it on whatever option is specified
+      else if @options.validate
+        @$el.on @options.validate,
+          $.debounce( @options.timeout, @getInputValidity )
+
+      # Get the Gravatar on input
+      @$el.on 'input', $.debounce( @options.timeout, @returnGravatar )
 
     unbind: ->
-      @$el.off 'input'
+      @$el.off 'input ' + @options.validate
 
-    # Get the input's current value
+    # Test the input's current value
     getInputValue: =>
-      @$el.val()
+      value = @$el.val()
+
+      # Return the value if the input has text
+      if value.length > 0
+        return value
+
+      # Otherwise callback the empty callback and return false
+      else
+        @options.onEmpty( @$el )
+        return false
+
 
     # Get the input's current validity
     # You could easily replace this with a regex for older browser support
+    # Should return a `bool` value
     getInputValidity: =>
-      @$el.context.validity.valid
-
-
-    # Validate the input's current value
-    validate: =>
-
-      # Get the current value for the input
+      validity = @$el.context.validity.valid
       value = @getInputValue()
 
+      # Callback for keyup
+      @options.onInput( @$el )
+
       # If the field is not empty
-      if value.length > 0
+      if value && validity
 
-        # If the field has a valid email address
-        if @getInputValidity()
-          @options.onValid( @$el )
+        # Call the valid callback and return the input
+        @options.onValid( @$el, value )
+        return value
 
-          # Check to see if they have a gravatar
-          @returnGravatar()
-
-        # If the field doesn't have a valid email address
-        else
-          @options.onInvalid( @$el )
-
-      # If the field is empty
+      # If the field doesn't have a valid email address
       else
-        @options.onEmpty( @$el )
+        @options.onInvalid( @$el )
+        return false
 
 
     gravatarRequest: ->
@@ -92,7 +109,9 @@
       # Return the full request string
       return url + md5 + ext + '?' + $.param( params )
 
+
     returnGravatar: =>
+
       # Create an image and attempt to load the URL
       $img = $('<img />')
 
@@ -105,7 +124,6 @@
         .load =>
           # Do something with the Gravatar
           @options.onGravatarSuccess( $img, @gravatarRequest(), @$el )
-          return true
 
         .attr( 'src', @gravatarRequest() )
 

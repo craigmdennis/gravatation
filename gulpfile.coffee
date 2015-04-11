@@ -14,6 +14,7 @@ gutil           = require 'gulp-util'
 header          = require 'gulp-header'
 bower           = require 'main-bower-files'
 strip           = require 'gulp-strip-debug'
+bump            = require 'gulp-bump'
 
 pkg             = require './package.json'
 
@@ -54,13 +55,32 @@ gulp.task 'dependencies', ['clean'], ->
 
 # Bundle our files up for production
 gulp.task 'bundle', ['coffee', 'dependencies'], ->
-  gulp.src ['.tmp/*.js']
+  stream = gulp.src ['.tmp/*.js']
     .pipe concat 'jquery.gravatation.bundled.js'
     .pipe gulp.dest 'dist'
     .pipe uglify()
     .pipe rename 'jquery.gravatation.bundled.min.js'
     .pipe strip()
     .pipe gulp.dest 'dist'
+
+
+# Version our files
+gulp.task 'patch', ['bundle'], ->
+  gulp.src ['*.json']
+    .pipe bump()
+    .pipe gulp.dest './'
+
+gulp.task 'minor', ['bundle'], ->
+  gulp.src ['*.json']
+    .pipe bump
+      type: 'minor'
+    .pipe gulp.dest './'
+
+gulp.task 'major', ['bundle'], ->
+  gulp.src ['*.json']
+    .pipe bump
+      type: 'major'
+    .pipe gulp.dest './'
 
 
 # Clean our output directory

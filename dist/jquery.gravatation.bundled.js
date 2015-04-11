@@ -1,6 +1,6 @@
 /**
  * jquery.gravatation - A jQuery plugin to validate email addresses and retrieve associated Gravatar images.
- * @version v1.0.0
+ * @version v1.0.1
  * @link https://github.com/craigmdennis/gravatation
  * @license MIT
  */
@@ -14,58 +14,68 @@
       Gravatation.prototype.defaults = {
         size: 40,
         secure: false,
-        onInit: null,
-        onInvalid: null,
-        onValid: null,
-        onGravatarSuccess: null,
-        onGravatarFail: null,
-        onEmpty: null,
+        onInit: function() {},
+        onInput: function() {},
+        onInvalid: function() {},
+        onValid: function() {},
+        onGravatarSuccess: function() {},
+        onGravatarFail: function() {},
+        onEmpty: function() {},
         timeout: 500,
+        validate: 'input',
         ext: true,
         d: ''
       };
 
       function Gravatation(el, options) {
         this.returnGravatar = bind(this.returnGravatar, this);
-        this.validate = bind(this.validate, this);
         this.getInputValidity = bind(this.getInputValidity, this);
         this.getInputValue = bind(this.getInputValue, this);
         this.options = $.extend({}, this.defaults, options);
         this.$el = $(el);
         this.bind();
         this.options.onValid(this.$el);
-        console.log('gravatation Loaded');
+        console.log('Gravatation Loaded');
       }
 
       Gravatation.prototype.bind = function() {
-        this.validate();
-        return this.$el.on('input', $.debounce(this.options.timeout, this.validate));
+        if (this.options.validate) {
+          this.getInputValidity();
+        }
+        if (this.options.validate === 'blur') {
+          this.$el.on(this.options.validate, this.getInputValidity);
+        } else if (this.options.validate) {
+          this.$el.on(this.options.validate, $.debounce(this.options.timeout, this.getInputValidity));
+        }
+        return this.$el.on('input', $.debounce(this.options.timeout, this.returnGravatar));
       };
 
       Gravatation.prototype.unbind = function() {
-        return this.$el.off('input');
+        return this.$el.off('input ' + this.options.validate);
       };
 
       Gravatation.prototype.getInputValue = function() {
-        return this.$el.val();
+        var value;
+        value = this.$el.val();
+        if (value.length > 0) {
+          return value;
+        } else {
+          this.options.onEmpty(this.$el);
+          return false;
+        }
       };
 
       Gravatation.prototype.getInputValidity = function() {
-        return this.$el.context.validity.valid;
-      };
-
-      Gravatation.prototype.validate = function() {
-        var value;
+        var validity, value;
+        validity = this.$el.context.validity.valid;
         value = this.getInputValue();
-        if (value.length > 0) {
-          if (this.getInputValidity()) {
-            this.options.onValid(this.$el);
-            return this.returnGravatar();
-          } else {
-            return this.options.onInvalid(this.$el);
-          }
+        this.options.onInput(this.$el);
+        if (value && validity) {
+          this.options.onValid(this.$el, value);
+          return value;
         } else {
-          return this.options.onEmpty(this.$el);
+          this.options.onInvalid(this.$el);
+          return false;
         }
       };
 
@@ -95,8 +105,7 @@
           };
         })(this)).load((function(_this) {
           return function() {
-            _this.options.onGravatarSuccess($img, _this.gravatarRequest(), _this.$el);
-            return true;
+            return _this.options.onGravatarSuccess($img, _this.gravatarRequest(), _this.$el);
           };
         })(this)).attr('src', this.gravatarRequest());
       };
