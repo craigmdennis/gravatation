@@ -7,8 +7,6 @@ IE10+ as it uses the HTML5 [constraint validation API](https://developer.mozilla
 [1]: http://labs.etchapps.com/prototypes/gravatar-validation/
 [2]: http://lea.verou.me/2009/12/quickly-find-the-gravatar-that-corresponds-to-a-given-email/
 
-[![Code Climate](https://codeclimate.com/github/craigmdennis/gravatation.png)](https://codeclimate.com/github/craigmdennis/gravatation)
-
 ## Getting Started
 
 #### Bower
