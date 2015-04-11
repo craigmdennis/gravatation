@@ -20,6 +20,7 @@ Assuming that you don't see any red, you're ready to go. Just be sure to run `gu
 
 ## Submitting pull requests
 
+1. Fork the repo
 1. Create a new branch, please don't work in your `master` branch directly.
 1. Fix stuff.
 1. Update the documentation to reflect any changes.
