@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.0] - 2015-04-10
+### Changed
+- Fix: Typos in readme
+- Chore: abstract more of the functions to reduce interdependence
+
+### Added
+- Feat: Ability to bypass validation completely
+- Feat: Ability to specify any jquery event type for validation
+- Feat: Pass the valid email string to the `onValid` callback
+- Feat: Add callback for input changes regardless of validity
+
 ## [1.0.1] - 2015-04-10
 ### Changed
 - Fix: Typo in filenames
