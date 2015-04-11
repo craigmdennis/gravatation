@@ -3,6 +3,11 @@ A jQuery plugin to validate email addresses and retrieve associated Gravatar ima
 
 [![](https://david-dm.org/craigmdennis/gravatation.svg)](https://david-dm.org/craigmdennis/gravatation)
 
+## Demo
+Coming soon.
+
+<img src="http://f.cl.ly/items/1R210V1d0g0j2M3r1L3k/Screen%20Recording%202015-04-10%20at%2010.34%20pm.gif" width="319">
+
 ## Browser support
 IE10+ as it uses the HTML5 [constraint validation API](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation) rather than a complex regex that will always have *something* missing. You can easily swap this out though.
 
