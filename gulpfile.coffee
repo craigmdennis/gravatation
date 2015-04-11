@@ -55,10 +55,10 @@ gulp.task 'dependencies', ['clean'], ->
 # Bundle our files up for production
 gulp.task 'bundle', ['coffee', 'dependencies'], ->
   gulp.src ['.tmp/*.js']
-    .pipe concat 'jquery.gravitation.bundled.js'
+    .pipe concat 'jquery.gravatation.bundled.js'
     .pipe gulp.dest 'dist'
     .pipe uglify()
-    .pipe rename 'jquery.gravitation.bundled.min.js'
+    .pipe rename 'jquery.gravatation.bundled.min.js'
     .pipe strip()
     .pipe gulp.dest 'dist'
 
