@@ -58,14 +58,14 @@
     getInputValue: =>
       value = @$el.val()
 
-      # Return the value if the input has text
-      if value.length > 0
+      # Return false
+      if value.length == 0
+        return false
+
+      # Otherwise return the value if the input has text
+      else
         return value
 
-      # Otherwise callback the empty callback and return false
-      else
-        @options.onEmpty( @$el )
-        return false
 
 
     # Get the input's current validity
@@ -75,20 +75,24 @@
       validity = @$el.context.validity.valid
       value = @getInputValue()
 
-      # Callback for keyup
-      @options.onInput( @$el )
-
       # If the field is not empty
-      if value && validity
+      if value
 
-        # Call the valid callback and return the input
-        @options.onValid( @$el, value )
-        return value
+        # If the field has a valid email address
+        if validity
 
-      # If the field doesn't have a valid email address
+          # Call the valid callback and return the input
+          @options.onValid( @$el, value )
+          return value
+
+        # If the field doesn't have a valid email address
+        else
+          @options.onInvalid( @$el )
+          return false
+
+      # No text in input
       else
-        @options.onInvalid( @$el )
-        return false
+        @options.onEmpty( @$el )
 
 
     gravatarRequest: ->
@@ -111,6 +115,9 @@
 
 
     returnGravatar: =>
+
+      # Callback when input changes
+      @options.onInput( @$el )
 
       # Create an image and attempt to load the URL
       $img = $('<img />')
