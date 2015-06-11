@@ -1,6 +1,6 @@
 {
   "name": "jquery.gravatation",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "homepage": "https://github.com/craigmdennis/gravatation",
   "authors": [
     "Craig Dennis <craigmdennis@gmail.com>"
@@ -22,7 +22,7 @@
     "tests"
   ],
   "dependencies": {
-    "blueimp-md5": "~1.1.0",
+    "spark-md5": "~0.0.5",
     "jquery": "~2.1.3",
     "debounce": "https://github.com/cowboy/jquery-throttle-debounce.git"
   },
