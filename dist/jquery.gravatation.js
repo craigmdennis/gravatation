@@ -1,6 +1,6 @@
 /**
  * jquery.gravatation - A jQuery plugin to validate email addresses and retrieve associated Gravatar images.
- * @version v1.1.0
+ * @version v1.1.1
  * @link https://github.com/craigmdennis/gravatation
  * @license MIT
  */
@@ -85,7 +85,7 @@
         var ext, md5, params, url;
         url = this.options.secure ? 'https://secure' : 'http://www';
         url += '.gravatar.com/avatar/';
-        md5 = hex_md5(this.getInputValue());
+        md5 = SparkMD5.hash(this.getInputValue());
         ext = this.options.ext ? '.jpg' : '';
         if ($.isFunction(this.options.onGravatarFail)) {
           this.options.d = '404';

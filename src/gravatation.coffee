@@ -99,7 +99,7 @@
       # Ask Gravatar for the image
       url = if @options.secure then 'https://secure' else 'http://www'
       url += '.gravatar.com/avatar/'
-      md5 = hex_md5( @getInputValue() )
+      md5 = SparkMD5.hash( @getInputValue() )
       ext = if @options.ext then '.jpg' else ''
 
       if $.isFunction( @options.onGravatarFail )
