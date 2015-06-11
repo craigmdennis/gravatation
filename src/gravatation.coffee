@@ -27,10 +27,7 @@
       @bind()
 
       # Callback
-      @options.onValid( @$el )
-
-      console.log 'Gravatation Loaded'
-
+      @options.onInit( @$el )
 
     # Bind event handlers
     bind: ->
@@ -39,7 +36,7 @@
       if @options.validate
         @getInputValidity()
 
-      # Check the validity of the field on blur
+      # Check the validity of the field on blur but not with a delay
       if @options.validate == 'blur'
         @$el.on @options.validate, @getInputValidity
 
@@ -75,49 +72,50 @@
       validity = @$el.context.validity.valid
       value = @getInputValue()
 
-      # If the field is not empty
-      if value
+      # If the field has a valid email address
+      if value && validity
 
-        # If the field has a valid email address
-        if validity
+        # Call the valid callback and return the input
+        @options.onValid( @$el, value )
+        return value
 
-          # Call the valid callback and return the input
-          @options.onValid( @$el, value )
-          return value
+      # If the field doesn't have a valid email address
+      else if value && !validity
 
-        # If the field doesn't have a valid email address
-        else
-          @options.onInvalid( @$el )
-          return false
-
-      # No text in input
-      else
-        @options.onEmpty( @$el )
+        @options.onInvalid( @$el )
+        return false
 
 
     gravatarRequest: ->
-      # Ask Gravatar for the image
-      url = if @options.secure then 'https://secure' else 'http://www'
-      url += '.gravatar.com/avatar/'
-      md5 = SparkMD5.hash( @getInputValue() )
-      ext = if @options.ext then '.jpg' else ''
 
-      if $.isFunction( @options.onGravatarFail )
-        @options.d = '404'
+      if @getInputValue()
 
-      # Gravatar options
-      params =
-        size: @options.size
-        d: @options.d
+        # Ask Gravatar for the image
+        url = if @options.secure then 'https://secure' else 'http://www'
+        url += '.gravatar.com/avatar/'
+        md5 = SparkMD5.hash( @getInputValue() )
+        ext = if @options.ext then '.jpg' else ''
 
-      # Return the full request string
-      return url + md5 + ext + '?' + $.param( params )
+        if $.isFunction( @options.onGravatarFail )
+          @options.d = '404'
+
+        # Gravatar options
+        params =
+          size: @options.size
+          d: @options.d
+
+        # Return the full request string
+        return url + md5 + ext + '?' + $.param( params )
+
+      else
+        @options.onEmpty( @$el )
 
 
     returnGravatar: =>
 
       # Callback when input changes
       @options.onInput( @$el )
+      request = @gravatarRequest()
 
       # Create an image and attempt to load the URL
       $img = $('<img />')
@@ -125,14 +123,14 @@
       $img
         .error =>
           # No gravatar
-          @options.onGravatarFail( $img, @gravatarRequest(), @$el )
+          @options.onGravatarFail( $img, request, @$el )
           return false
 
         .load =>
           # Do something with the Gravatar
-          @options.onGravatarSuccess( $img, @gravatarRequest(), @$el )
+          @options.onGravatarSuccess( $img, request, @$el )
 
-        .attr( 'src', @gravatarRequest() )
+        .attr( 'src', request )
 
 
   # Define the plugin
