@@ -133,6 +133,7 @@ $('[data-gravatation]').gravatation({
   }
 });
 ```
+View on CodePen: http://codepen.io/craigmdennis/full/BNraWj/
 
 #### Validate on blur instead of input
 If you only want to validate when the user switches fields the pass in `blur` as the `validate` option.
