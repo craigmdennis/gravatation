@@ -2,7 +2,7 @@
   "name": "jquery.gravatation",
   "version": "1.2.1",
   "description": "A jQuery plugin to validate email addresses and retrieve associated Gravatar images.",
-  "main": "dist/jquery.gravatation.bundle.js",
+  "main": "dist/jquery.gravatation.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
